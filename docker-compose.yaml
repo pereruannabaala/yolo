@@ -1,69 +1,52 @@
-#This file builds the Docker images for a React/NodeJS application and runs it as microservices on Docker containers
-
-#To ensure successful execution, clone this entire repository and execute this file while in the root folder of the cloned repository
-
-#It's also a requirement to have Docker and the docker-compose plugin installed in your environment
-
-#To launch this app without having to clone the entire repository,use the docker-compose.yaml file to run the app
-
-version: "3.8"
-
+version: '3'
 services:
-
-  #Builds the frontend Docker image and creates the frontend microservice
-  brian-yolo-client:
-    image: brianbwire/brian-yolo-client:v1.0.0
-    build: ./client
-    container_name: brian-yolo-client
-    stdin_open: true
-    tty: true
+  client:
+    container_name: client-container
+    image: pereruan/img-a:v2.0.0
+    build:
+      context: ./client
     ports:
       - "3000:3000"
-    depends_on: 
-      - brian-yolo-backend
     networks:
-      - app-net
+      - yolo-network
+    volumes:
+      - client-volume:/app
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:5000/api 
 
-  #Builds the backend Docker image and creates the backend microservice
-  brian-yolo-backend:
-    image: brianbwire/brian-yolo-backend:v1.0.0
-    build: ./backend
-    container_name: brian-yolo-backend
-    stdin_open: true
-    tty: true
-    restart: always
+  backend:
+    container_name: backend-container
+    image: pereruan/img-b:v2.0.0
+    build:
+      context: ./backend
     ports:
       - "5000:5000"
-    depends_on: 
-      - app-ip-mongo
     networks:
-      - app-net
+      - yolo-network
+    volumes:
+      - backend-volume:/app
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/yolomy  
+    depends_on:
+      - mongodb
 
-  #Creates the database microservice
-  app-ip-mongo:
-    image: mongo
-    container_name: app-mongo
+  mongodb:
+    container_name: yolo-mongodb
+    image: mongo:latest
     ports:
       - "27017:27017"
     networks:
-      - app-net
+      - yolo-network
     volumes:
-      - type: volume
-        source: app-mongo-data
-        target: /data/db
+      - mongodb-data:/data/db
 
-#Creates the network infrastructure necessary for the containers to communicate with each other
-networks:
-  app-net:
-    name: app-net
-    driver: bridge
-    attachable: true
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16 
-          ip_range: 172.20.0.0/16 
-
-#Creates a Docker volume that persists all the data stored in the database
 volumes:
-  app-mongo-data:
-    driver: local
+  backend-volume:
+  client-volume:
+  mongodb-data:
+
+networks:
+  yolo-network:
+    driver: bridge
