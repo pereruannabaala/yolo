@@ -4,6 +4,7 @@ COPY package*.json ./
 RUN npm ci --only=production && \
     npm cache clean --force
 COPY . .
+ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN rm -rf /var/cache/apk/* && \
     rm -rf /tmp/*
 EXPOSE 3000
