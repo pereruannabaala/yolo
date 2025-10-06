@@ -15,15 +15,14 @@ if (!MONGODB_URI) {
 }
 
 // Connect to MongoDB using async/await
-async function connectDB() {
-    try {
-        await mongoose.connect(MONGODB_URI); // options not needed in Mongoose 6+
-        console.log('Database connected successfully');
-    } catch (err) {
+// Connect to MongoDB Atlas
+mongoose.connect(MONGODB_URI)
+    .then(() => console.log('Database connected successfully'))
+    .catch(err => {
         console.error('Database connection error:', err);
         process.exit(1);
-    }
-}
+    });
+
 
 connectDB();
 
