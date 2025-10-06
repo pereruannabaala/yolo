@@ -83,5 +83,17 @@ The application will then be accessible in your browser at: ``http://localhost:3
 Below is a screenshot showing the images successfully pushed to DockerHub:
 ![DockerHub Image Deployment](images/dockerhub-screenshot.png)
 
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🐳 Badges
+
+![Docker](https://img.shields.io/badge/Docker-🐳-blue)  
+[![DockerHub](https://img.shields.io/badge/DockerHub-View-blue?logo=docker)](https://hub.docker.com/repository/docker/pereruannabaala/yolo)
+
+
 
 
