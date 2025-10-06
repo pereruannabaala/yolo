@@ -1,14 +1,12 @@
 # Build stage
 FROM node:18.19.1-alpine AS builder
 WORKDIR /app
-
 COPY package*.json ./
-RUN npm config set registry https://registry.npmmirror.com \
-    && npm config set fetch-retries 5 \
-    && npm config set fetch-timeout 60000 \
-    && npm install
-
+RUN npm install
 COPY . .
+
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 RUN npm run build
 
 # Production stage
