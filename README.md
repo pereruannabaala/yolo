@@ -94,6 +94,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ![Docker](https://img.shields.io/badge/Docker-🐳-blue)  
 [![DockerHub](https://img.shields.io/badge/DockerHub-View-blue?logo=docker)](https://hub.docker.com/repository/docker/pereruannabaala/yolo)
 
+## Author
+- Pereruan Nabaala
+- pereruannabaala@gmail.com
 
 
 
