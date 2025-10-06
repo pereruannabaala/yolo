@@ -11,27 +11,29 @@ const productRoute = require('./routes/api/productRoute');
 const MONGODB_URI = process.env.MONGO_URL;
 if (!MONGODB_URI) {
     console.error("Error: MONGO_URL environment variable not set");
-    process.exit(1); // Exit if MongoDB URI is missing
+    process.exit(1);
 }
 
-// Connect to MongoDB Atlas
-mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('Database connected successfully'))
-.catch(err => {
-    console.error('Database connection error:', err);
-    process.exit(1);
-});
+// Connect to MongoDB using async/await
+async function connectDB() {
+    try {
+        await mongoose.connect(MONGODB_URI); // options not needed in Mongoose 6+
+        console.log('Database connected successfully');
+    } catch (err) {
+        console.error('Database connection error:', err);
+        process.exit(1);
+    }
+}
+
+connectDB();
 
 // Initialize Express app
 const app = express();
 
 // Middleware
-app.use(express.json()); // Body parser
-app.use(upload.array()); // Multer for multipart/form-data
-app.use(cors());         // Enable CORS
+app.use(express.json());   // Body parser
+app.use(upload.array());   // Multer for multipart/form-data
+app.use(cors());           // Enable CORS
 
 // Routes
 app.use('/api/products', productRoute);
