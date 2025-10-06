@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -6,39 +7,37 @@ const upload = multer();
 
 const productRoute = require('./routes/api/productRoute');
 
-// Connecting to the Database
-const MONGODB_URI = process.env.MONGO_URL || 'mongodb://localhost/yolomy';
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-let db = mongoose.connection;
+// Ensure MONGO_URL is set
+const MONGODB_URI = process.env.MONGO_URL;
+if (!MONGODB_URI) {
+    console.error("Error: MONGO_URL environment variable not set");
+    process.exit(1); // Exit if MongoDB URI is missing
+}
 
-// Check Connection
-db.once('open', ()=>{
-    console.log('Database connected successfully')
+// Connect to MongoDB Atlas
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 })
+.then(() => console.log('Database connected successfully'))
+.catch(err => {
+    console.error('Database connection error:', err);
+    process.exit(1);
+});
 
-// Check for DB Errors
-db.on('error', (error)=>{
-    console.log(error);
-})
+// Initialize Express app
+const app = express();
 
-// Initializing express
-const app = express()
+// Middleware
+app.use(express.json()); // Body parser
+app.use(upload.array()); // Multer for multipart/form-data
+app.use(cors());         // Enable CORS
 
-// Body parser middleware
-app.use(express.json())
+// Routes
+app.use('/api/products', productRoute);
 
-// 
-app.use(upload.array()); 
-
-// Cors 
-app.use(cors());
-
-// Use Route
-app.use('/api/products', productRoute)
-
-// Define the PORT
-const PORT = process.env.PORT || 5000
-
-app.listen(PORT, ()=>{
-    console.log(`Server listening on port ${PORT}`)
-})
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+});

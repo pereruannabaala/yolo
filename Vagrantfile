@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
   config.vm.provider "docker" do |d|
     d.image = "ubuntu:20.04"
-    d.has_ssh = true
+    d.has_ssh = false
     d.cmd = ["sleep", "infinity"]   # keep the container running
   end
 
