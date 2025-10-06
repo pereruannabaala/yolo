@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
 
 // @route POST /products
 // @desc Create a product
+// POST /products
 router.post('/', async (req, res) => {
     try {
         const newProduct = new Product({
@@ -25,9 +26,10 @@ router.post('/', async (req, res) => {
             description: req.body.description,
             price: req.body.price,
             quantity: req.body.quantity,
-            photo: req.body.photo // include photo if needed
+            photo: req.body.photo
         });
 
+        // await save, no callback
         const savedProduct = await newProduct.save();
         res.json(savedProduct);
     } catch (err) {
@@ -35,6 +37,7 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 // @route PUT /products/:id
 // @desc Update a product
