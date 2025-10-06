@@ -1,6 +1,20 @@
 version: "3.9"
 
 services:
+  backend:
+    container_name: backend-container
+    image: pereruan/img-b:v2.0.0
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    networks:
+      - yolo-network
+    volumes:
+      - backend-volume:/app
+    env_file:
+      - ./backend/.env
+
   client:
     container_name: client-container
     image: pereruan/img-a:v2.0.0
@@ -18,20 +32,6 @@ services:
       - REACT_APP_BACKEND_URL=http://backend:5000/api
       - HOST=0.0.0.0
 
-  backend:
-    container_name: backend-container
-    image: pereruan/img-b:v2.0.0
-    build:
-      context: ./backend
-    ports:
-      - "5000:5000"
-    networks:
-      - yolo-network
-    volumes:
-      - backend-volume:/app
-    env_file:
-      - ./backend/.env
-    
 volumes:
   backend-volume:
   client-volume:
