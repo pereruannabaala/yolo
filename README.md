@@ -34,3 +34,49 @@ yolo/
 └── README.md
 
 ```
+---
+
+## 🛠 Setup & Development
+
+### Prerequisites
+
+- Node.js installed (for local development)  
+- Docker & Docker Compose installed  
+- A MongoDB Atlas cluster with connection URI  
+- (Optional) `.env` files for environment configuration  
+
+### Local Setup 
+
+1. Clone the repo:  
+   ```bash
+   git clone https://github.com/pereruannabaala/yolo.git
+   cd yolo
+
+2. Backend setup
+```
+cd backend
+npm install
+npm run dev 
+```
+
+3. Client setup
+```
+cd ../client
+npm install
+npm start
+```
+
+## 🐳 Running with Docker Compose
+
+Ensure your `backend/.env` contains a valid `MONGO_URL` and other required environment variables.
+From the root directory, run:
+
+```bash
+docker compose up
+```
+This will build and launch:
+- **backend** service
+- **client** service
+The application will then be accessible in your browser at: ``http://localhost:3000``
+
+
