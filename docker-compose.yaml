@@ -1,10 +1,13 @@
+version: "3.9"
+
+services:
   client:
     container_name: client-container
     image: pereruan/img-a:v2.0.0
     build:
       context: ./client
     ports:
-      - "3000:80"  
+      - "3000:80"
     networks:
       - yolo-network
     volumes:
@@ -14,7 +17,6 @@
     environment:
       - REACT_APP_BACKEND_URL=http://backend:5000/api
       - HOST=0.0.0.0
-
 
   backend:
     container_name: backend-container
@@ -28,7 +30,7 @@
     volumes:
       - backend-volume:/app
     environment:
-      - MONGODB_URI=mongodb://mongodb:27017/yolomy  
+      - MONGODB_URI=mongodb://mongodb:27017/yolomy
     depends_on:
       - mongodb
 
