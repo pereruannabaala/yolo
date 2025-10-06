@@ -29,25 +29,12 @@ services:
       - yolo-network
     volumes:
       - backend-volume:/app
-    environment:
-      - MONGODB_URI=mongodb://mongodb:27017/yolomy
-    depends_on:
-      - mongodb
-
-  mongodb:
-    container_name: yolo-mongodb
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    networks:
-      - yolo-network
-    volumes:
-      - mongodb-data:/data/db
-
+    env_file:
+      - ./backend/.env
+    
 volumes:
   backend-volume:
   client-volume:
-  mongodb-data:
 
 networks:
   yolo-network:
