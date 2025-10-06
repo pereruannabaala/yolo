@@ -14,17 +14,13 @@ if (!MONGODB_URI) {
     process.exit(1);
 }
 
-// Connect to MongoDB using async/await
-// Connect to MongoDB Atlas
+// Connect to MongoDB
 mongoose.connect(MONGODB_URI)
     .then(() => console.log('Database connected successfully'))
     .catch(err => {
         console.error('Database connection error:', err);
         process.exit(1);
     });
-
-
-connectDB();
 
 // Initialize Express app
 const app = express();
