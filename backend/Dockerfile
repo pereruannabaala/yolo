@@ -1,26 +1,24 @@
-# Base image
-FROM node:18.19.1-alpine
+# Use a smaller base image
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy dependency files first (for better caching)
+# Copy package files first for caching
 COPY package*.json ./
 
-# Use a faster mirror and retry settings to prevent timeout issues
-RUN npm config set registry https://registry.npmmirror.com \
-    && npm config set fetch-retries 5 \
-    && npm config set fetch-timeout 60000 \
-    && npm install
+# Install dependencies
+RUN npm install --production \
+    && npm cache clean --force
 
-# Copy the rest of the application code
+# Copy application code
 COPY . .
 
-# Set environment variable for production
+# Set environment variables
 ENV NODE_ENV=production
 
-# Expose the app port
+# Expose application port
 EXPOSE 5000
 
-# Start the server
+# Start server
 CMD ["node", "server.js"]
