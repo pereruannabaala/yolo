@@ -79,4 +79,9 @@ This will build and launch:
 - **client** service
 The application will then be accessible in your browser at: ``http://localhost:3000``
 
+## 🖼 Image Deployment on DockerHub
+Below is a screenshot showing the images successfully pushed to DockerHub:
+![DockerHub Image Deployment](images/dockerhub-screenshot.png)
+
+
 
