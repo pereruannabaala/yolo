@@ -32,7 +32,6 @@ yolo/
 ├── docker-compose.yaml
 ├── .gitignore
 └── README.md
-
 ```
 ---
 
