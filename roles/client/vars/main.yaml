@@ -1,7 +1,8 @@
 ---
-client_image: "pereruan/img-a:v2.0.0"
+client_image: "pereruannabaala/yolo:img-a-v2.0.0"
 client_container_name: "client-container"
-client_port: 3000
+client_host_port: 3000        # host port you access in browser or health check
+client_container_port: 80     # port Nginx listens to inside container
 client_env:
   NODE_ENV: "production"
   REACT_APP_API_URL: "http://localhost:{{ backend_port | default(5000) }}/api"

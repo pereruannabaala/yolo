@@ -10,18 +10,18 @@
     image: "{{ client_image }}"
     state: started
     restart_policy: always
-    network_mode: "{{ docker_network_name }}"
     ports:
-      - "{{ client_port }}:3000"
+      - "{{ client_host_port }}:{{ client_container_port }}"
     env:
-      NODE_ENV: "{{ node_env }}"
-      REACT_APP_API_URL: "http://localhost:{{ backend_port }}/api"
+      NODE_ENV: "{{ client_env.NODE_ENV }}"
+      REACT_APP_API_URL: "{{ client_env.REACT_APP_API_URL }}"
 
 - name: Wait for client to be ready
   uri:
-    url: "http://localhost:{{ client_port }}"
+    url: "http://localhost:{{ client_host_port }}"
     status_code: 200
+    timeout: 5
   register: result
+  retries: 30
+  delay: 5
   until: result.status == 200
-  retries: 60
-  delay: 1
