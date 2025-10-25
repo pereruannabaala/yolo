@@ -7,8 +7,9 @@ app_dir: "/opt/{{ app_name }}"
 docker_network_name: yolo-network
 
 # Docker images
-client_image: pereruan/img-a:v2.0.0
-backend_image: pereruan/img-b:v2.0.0
+client_image: pereruannabaala/yolo:img-a-v2.0.0
+backend_image: pereruannabaala/yolo:img-b-v2.0.3
+
 
 # Ports
 client_port: 3000
