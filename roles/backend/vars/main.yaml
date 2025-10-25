@@ -1,0 +1,8 @@
+---
+backend_image: "pereruan/img-b:v2.0.0"
+backend_container_name: "backend-container"
+backend_port: 5000
+backend_env:
+  NODE_ENV: "production"
+  MONGO_URI: process.env.MONGO_URL
+  PORT: "5000" 
