@@ -1,7 +1,27 @@
-- name: Pull backend Docker image
-  community.docker.docker_image:
-    name: "{{ backend_image }}"
-    source: pull
+- block:
+    - name: Pull backend Docker image
+      community.docker.docker_image:
+        name: "{{ backend_image }}"
+        source: pull
+  rescue:
+    - name: Build backend Docker image locally if pull fails
+      community.docker.docker_image:
+        name: "{{ backend_image }}"
+        build:
+          path: "{{ backend_build_dir | default('./backend') }}"
+      register: backend_build_result
+
+    - name: Push backend image to Docker Hub (optional)
+      community.docker.docker_image:
+        name: "{{ backend_image }}"
+        push: true
+      when: backend_build_result.changed
+  tags: backend
+
+- name: Create Docker network
+  docker_network:
+    name: yolo-network
+    state: present
 
 - name: Start backend container
   community.docker.docker_container:
@@ -9,19 +29,15 @@
     image: "{{ backend_image }}"
     state: started
     restart_policy: always
-    network_mode: "{{ docker_network_name }}"
+    network_mode: "yolo-network"
     ports:
       - "{{ backend_port }}:5000"
-    env:
-      NODE_ENV: "{{ node_env }}"
-      MONGO_URI: "mongodb://{{ mongodb_container_name }}:{{ mongodb_port }}/{{ mongodb_database }}"
-      PORT: "{{ backend_port | quote }}"  
 
 - name: Wait for backend to be ready
   uri:
-    url: "http://localhost:{{ backend_port }}/api/health"
+    url: "http://localhost:5000/api/health"
     status_code: 200
   register: result
   until: result.status == 200
   retries: 60
-  delay: 1
+  delay: 5

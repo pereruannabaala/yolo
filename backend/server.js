@@ -30,6 +30,11 @@ app.use(express.json());   // Body parser
 app.use(upload.array());   // Multer for multipart/form-data
 app.use(cors());           // Enable CORS
 
+// Health check route
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: 'ok', message: 'Backend is healthy' });
+});
+
 // Routes
 app.use('/api/products', productRoute);
 
