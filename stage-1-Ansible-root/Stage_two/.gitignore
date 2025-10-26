@@ -1,0 +1,28 @@
+# --- Terraform ---
+terraform.tfvars
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+crash.log
+
+# --- AWS Credentials or Private Keys ---
+*.pem
+*.key
+*.crt
+
+# --- Ansible Cache & Secrets ---
+*.retry
+*.vault_pass
+ansible.cfg
+inventory.ini
+__pycache__/
+
+# --- Logs & Temporary Files ---
+*.log
+*.tmp
+
+# --- IDE & OS Files ---
+.vscode/
+.idea/
+.DS_Store
