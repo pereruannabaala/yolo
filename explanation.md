@@ -1,100 +1,3 @@
-# YOLO E‑Commerce App
-
-A full‑stack e‑commerce web application built with **Node.js / Express**, **MongoDB / Atlas**, and **React** (served via Nginx), containerized with **Docker / Docker Compose**.
-
----
-
-## 🚀 Features
----
-- **Full-stack e-commerce platform** with product management  
-- **React frontend** for interactive user interface  
-- **Node.js / Express backend** with RESTful API  
-- **MongoDB Atlas** for cloud database hosting  
-- **Dockerized services** for easy deployment and scalability  
-- Designed for **local development** and **cloud deployment** on AWS  
----
-
-## 📂 Repository Structure
-```
-yolo/
-├── backend/                 # Backend (Node.js / Express)
-│   ├── server.js
-│   ├── routes/api/productRoute.js
-│   ├── models/Products.js
-│   ├── package.json
-│   └── Dockerfile
-├── client/                  # Frontend (React)
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   └── Dockerfile
-├── docker-compose.yaml
-├── .gitignore
-└── README.md
-
-```
----
-
-## 🛠 Setup & Development
-
-### Prerequisites
-
-- Node.js installed (for local development)  
-- Docker & Docker Compose installed  
-- A MongoDB Atlas cluster with connection URI  
-- (Optional) `.env` files for environment configuration  
-
-### Local Setup 
-
-1. Clone the repo:  
-   ```bash
-   git clone https://github.com/pereruannabaala/yolo.git
-   cd yolo
-
-2. Backend setup
-```
-cd backend
-npm install
-npm run dev 
-```
-
-3. Client setup
-```
-cd ../client
-npm install
-npm start
-```
-
-## 🐳 Running with Docker Compose
-
-Ensure your `backend/.env` contains a valid `MONGO_URL` and other required environment variables.
-From the root directory, run:
-
-```bash
-docker compose up
-```
-This will build and launch:
-- **backend** service
-- **client** service
-The application will then be accessible in your browser at: ``http://localhost:3000``
-
-
-## 🖼 Image Deployment on DockerHub
-Below is a screenshot showing the images successfully pushed to DockerHub:
-![DockerHub Image Deployment](images/dockerhub-screenshot.png)
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-## 🐳 Badges
-
-![Docker](https://img.shields.io/badge/Docker-🐳-blue)  
-[![DockerHub](https://img.shields.io/badge/DockerHub-View-blue?logo=docker)](https://hub.docker.com/repository/docker/pereruannabaala/yolo)
-
-
 # Stage 1: Local Deployment with Ansible & Vagrant
 
 ## Objectives
@@ -126,8 +29,7 @@ Stores all application variables, including:
 - Installs Docker and Python for Ansible.  
 
 ## Outcome
-- Local VM runs both frontend and backend containers.
-
+- Local VM runs both frontend and backend containers.  
 - Application is accessible via [http://localhost:3000](http://localhost:3000).  
 - Full automation is achieved with a single `ansible-playbook playbook.yaml` command.
 
@@ -135,7 +37,6 @@ Stores all application variables, including:
 
 ## Objectives
 - Provision EC2 instances on AWS using Terraform.
-![EC2 Instance Screenshot](images/instances.png)  
 - Use Ansible to configure the servers and deploy the Dockerized application.  
 - Automate the full infrastructure and application deployment workflow.  
 
@@ -176,8 +77,7 @@ stage-1-Ansible-root/
 
 ## Outcome
 - EC2 instances are created and configured automatically.  
-- Docker containers run on AWS, and the application is publicly accessible via `http://<EC2-public-ip>:3000`.
-![Launched Instance Screenshot](images/yolomy.png)  
+- Docker containers run on AWS, and the application is publicly accessible via `http://<EC2-public-ip>:3000`.  
 - Full automation from infrastructure provisioning to application deployment.  
 
 ## Summary
@@ -189,8 +89,3 @@ stage-1-Ansible-root/
 - Docker containerization for modularity.  
 - Secure and reproducible infrastructure provisioning.  
 - Automation of end-to-end deployment.
-
-
-## Author
-- Pereruan Nabaala
-- pereruannabaala@gmail.com
