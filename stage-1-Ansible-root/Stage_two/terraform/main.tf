@@ -1,6 +1,5 @@
 resource "aws_security_group" "server_sg" {
-  name        = "server_sg"
-  description = "Security group for the EC2 instances"
+  name_prefix = "server_sg-"
 
   ingress {
     description = "Allow SSH"
