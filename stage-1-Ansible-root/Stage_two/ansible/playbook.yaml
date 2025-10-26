@@ -1,0 +1,27 @@
+---
+- name: Stage Two - Provision Infrastructure
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vars/main.yaml
+
+  tasks:
+    - name: Provision resources using Terraform
+      community.general.terraform:
+        project_path: "../terraform"
+        state: present
+        force_init: yes
+      register: terraform_output
+
+    - name: Display Terraform output
+      debug:
+        var: terraform_output
+
+- name: Stage Two - Configure and Deploy Application
+  hosts: app_servers
+  become: yes
+  vars_files:
+    - vars/main.yaml
+  roles:
+    - backend
+    - client
