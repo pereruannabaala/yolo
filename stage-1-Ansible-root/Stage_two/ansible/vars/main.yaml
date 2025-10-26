@@ -1,0 +1,34 @@
+---
+# Application variables
+app_name: e-commerce-app
+app_dir: "/opt/{{ app_name }}"
+
+# Docker network
+docker_network_name: yolo-network
+
+# Docker images
+client_image: pereruannabaala/yolo:img-a-v2.0.0
+backend_image: pereruannabaala/yolo:img-b-v2.0.3
+
+# Ports
+client_port: 3000
+backend_port: 5000
+
+# Container names
+client_container_name: "client-container"
+backend_container_name: "backend-container"
+
+# Environment settings
+node_env: production
+
+# --- Terraform integration variables ---
+# These will be dynamically populated from Terraform output.
+# You’ll reference them in your playbook to connect to the provisioned instance.
+
+# Example variables that can be populated from Terraform output
+ansible_host: "{{ lookup('env', 'TF_HOST_IP') | default('127.0.0.1', true) }}"
+ansible_user: "{{ lookup('env', 'TF_SSH_USER') | default('vagrant', true) }}"
+ansible_ssh_private_key_file: "{{ lookup('env', 'TF_SSH_KEY') | default('~/.ssh/id_rsa', true) }}"
+
+# Optional: Terraform directory
+terraform_dir: "../terraform"
