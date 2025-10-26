@@ -1,23 +1,29 @@
+# AWS credentials
 variable "aws_access_key" {
-  description = "AWS access key"
+  description = "AWS Access Key"
   type        = string
-  sensitive   = true
 }
 
 variable "aws_secret_key" {
-  description = "AWS secret key"
+  description = "AWS Secret Key"
   type        = string
-  sensitive   = true
 }
 
-variable "instance_ami" {
-  description = "AMI ID for the EC2 instances"
+# AWS region
+variable "aws_region" {
+  description = "AWS region where resources will be created"
   type        = string
-  default     = "ami-0cd59ecaf368e5ccf" # Amazon Linux 2 example
+  default     = "us-east-1"
+}
+
+# Instance configuration
+variable "instance_ami" {
+  description = "AMI ID for the EC2 instance"
+  type        = string
 }
 
 variable "instance_type" {
-  description = "EC2 instance type"
+  description = "Type of EC2 instance"
   type        = string
   default     = "t2.micro"
 }
