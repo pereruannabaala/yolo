@@ -199,7 +199,7 @@ It includes setup instructions, configuration files, and commands for deploying 
 
 ## 🚀 Overview
 
-The Yolo App is a containerized web application that runs in a Kubernetes cluster managed by AWS EKS.  
+Yolo App is a containerized web application that runs in a Kubernetes cluster managed by AWS EKS.  
 This setup leverages:
 - **EKS** for cluster management
 - **Amazon EBS CSI Driver** for persistent storage
@@ -253,13 +253,31 @@ kubectl get deployment
 kubectl get pods
 ```
 
-### 4. Check Services
+# Exposing Services in Kubernetes
+
+## Accessing External IPs in Minikube vs AWS EKS
+
+### ⚙️ Minikube
+When running Kubernetes locally using **Minikube**, `LoadBalancer` services do not automatically get a public external IP because Minikube does not have a built-in cloud load balancer.
+
+To simulate this, you need to run:
+
+```bash
+minikube tunnel
+```
+
+### Access your deployed services
+Run
 ```
 kubectl get svc
 ```
 
-## Running External IP
-Run the external IP provided by AWS EKS(Elastic Kubernetes Service) ``http://ac9e2c97fe5ff4fbb8851d54be580185-1081048613.us-east-1.elb.amazonaws.com:3000/``
+### Run it the External IP to view your services
+``
+backend-service   LoadBalancer   10.100.158.213   af4eb36195fc640a1800376783c5d219-58923987.us-east-1.elb.amazonaws.com     5000:30095/TCP
+client-service    LoadBalancer   10.100.202.215   ac9e2c97fe5ff4fbb8851d54be580185-1081048613.us-east-1.elb.amazonaws.com   3000:32703/TCP
+
+``
 
 ## Author
 - Pereruan Nabaala
