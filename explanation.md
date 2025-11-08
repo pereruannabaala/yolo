@@ -89,3 +89,58 @@ stage-1-Ansible-root/
 - Docker containerization for modularity.  
 - Secure and reproducible infrastructure provisioning.  
 - Automation of end-to-end deployment.
+
+# YOLO App Deployment on Kubernetes (EKS)
+
+## Overview
+This project demonstrates the deployment of the **YOLO application** on Kubernetes, hosted on **AWS EKS**. It covers the orchestration of multiple components, including a backend API, frontend client, and MongoDB database.
+
+---
+
+## Kubernetes Objects Used
+
+### 1. StatefulSets
+- **Used for MongoDB** to manage database pods.  
+- **Reason for choice:** MongoDB requires persistent, stable storage and unique network identifiers per pod. StatefulSets ensure:
+  - Stable pod names (e.g., `mongodb-0`, `mongodb-1`)  
+  - Persistent volume claims per pod, preserving data across pod restarts  
+  - Ordered, deterministic deployment and scaling  
+
+### 2. Deployments
+- **Used for backend and client applications**.  
+- **Reason for choice:** Backend and client services are stateless and do not require stable storage or identity. Deployments provide:
+  - Easy scaling  
+  - Rolling updates  
+  - Automated self-healing in case of pod failures  
+
+### 3. Services
+- **Used to expose pods internally and externally**:  
+  - **ClusterIP**: Used for internal communication between pods (MongoDB internal access).  
+  - **LoadBalancer**: Used for backend and frontend services to allow internet access via AWS ELB.  
+
+---
+
+## Exposure to Internet Traffic
+- The **backend** and **client** pods are exposed using **LoadBalancer Services**.  
+- Each service automatically provisions an **AWS Elastic Load Balancer (ELB)** and assigns a public DNS name.  
+- Example endpoints:
+  - Backend: `http://<backend-ELB-dns>:5000`
+  - Client: `http://<client-ELB-dns>:3000`
+
+---
+
+## Persistent Storage
+- Persistent storage is used **only for MongoDB**.  
+- **PersistentVolumeClaims (PVCs)** are dynamically provisioned using the **AWS EBS CSI driver**.  
+- Benefits of using persistent storage:
+  - Database data persists across pod restarts or node failures.  
+  - Each MongoDB pod has a dedicated volume bound to it.  
+
+- The backend and client pods do **not use persistent storage**, as they are stateless and can be recreated without data loss.
+
+---
+
+## Notes
+- The application components communicate via Kubernetes services internally.  
+- The backend connects to MongoDB using the StatefulSet service DNS.  
+- Kubernetes self-healing ensures pods are restarted if they crash, maintaining application availability.
