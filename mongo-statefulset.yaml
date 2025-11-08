@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -6,7 +5,7 @@ metadata:
   labels:
     app: mongodb
 spec:
-  serviceName: "mongodb"
+  serviceName: "yolo-mongodb"
   replicas: 2
   selector:
     matchLabels:
@@ -18,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mongodb
-        image: mongo:latest
+        image: mongo:6.0
         ports:
         - containerPort: 27017
         volumeMounts:
@@ -26,9 +25,10 @@ spec:
           mountPath: /data/db
   volumeClaimTemplates:
   - metadata:
-       name: mongodb-data
+      name: mongodb-data
     spec:
       accessModes: [ "ReadWriteOnce" ]
+      storageClassName: standard
       resources:
         requests:
           storage: 1Gi
