@@ -190,6 +190,76 @@ stage-1-Ansible-root/
 - Secure and reproducible infrastructure provisioning.  
 - Automation of end-to-end deployment.
 
+# 🧠 Yolo App - Kubernetes Deployment on AWS EKS
+
+This repository contains the Kubernetes deployment and services configurations for the **Yolo App**, deployed on **Amazon Elastic Kubernetes Service (EKS)**.  
+It includes setup instructions, configuration files, and commands for deploying the application, storage, and networking components.
+
+---
+
+## 🚀 Overview
+
+The Yolo App is a containerized web application that runs in a Kubernetes cluster managed by AWS EKS.  
+This setup leverages:
+- **EKS** for cluster management
+- **Amazon EBS CSI Driver** for persistent storage
+- **LoadBalancer Service** for external access
+- **kubectl** and **eksctl** for deployment and configuration
+
+---
+
+## 🏗️ Prerequisites
+
+Before deploying, ensure you have the following installed and configured:
+
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- [eksctl](https://eksctl.io/introduction/#installation)
+- [Docker](https://docs.docker.com/get-docker/)
+- An **AWS account** with sufficient IAM permissions
+- A **configured AWS CLI profile** (`aws configure`)
+
+---
+
+## ⚙️ Cluster Setup
+
+### 1. Create an EKS Cluster
+```bash
+eksctl create cluster \
+  --name yolo-cluster \
+  --region us-east-1 \
+  --nodegroup-name standard-workers \
+  --node-type t3.medium \
+  --nodes 2 \
+  --nodes-min 2 \
+  --nodes-max 3 \
+  --managed
+
+
+```
+### 2. Verify Cluster
+```
+kubectl get nodes
+kubectl cluster-info
+```
+
+### 3. Check deployments
+```
+kubectl get deployment
+```
+
+### 4. Get pods
+```
+kubectl get pods
+```
+
+### 4. Check Services
+```
+kubectl get svc
+```
+
+## Running External IP
+Run the external IP provided by AWS EKS(Elastic Kubernetes Service) ``http://ac9e2c97fe5ff4fbb8851d54be580185-1081048613.us-east-1.elb.amazonaws.com:3000/``
 
 ## Author
 - Pereruan Nabaala
