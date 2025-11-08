@@ -32,15 +32,3 @@ spec:
       resources:
         requests:
           storage: 1Gi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: yolo-mongodb
-spec:
-  type: ClusterIP
-  selector:
-    app: mongodb
-  ports:
-  - port: 27017
-    targetPort: 27017
